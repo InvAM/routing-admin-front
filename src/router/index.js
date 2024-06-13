@@ -21,6 +21,11 @@ const routes = [
 				/* webpackChunkName: "recuperarContraseña" */ "../views/RecuperarContraseña/recuperarContraseña.vue"
 			),
 	},
+	{
+		path: "/registrarUsuario",
+		name: "RegistrarUsuario",
+		component: () => import (/* webpackChunkName: "registrarUsuario" */ "../views/RegistrarUsuario/registrarUsuario.vue")
+	}
 ];
 
 const router = createRouter({

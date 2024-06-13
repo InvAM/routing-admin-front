@@ -35,6 +35,7 @@
 		size="x-large"
 		elevation="8"
 		class="custom-btn"
+		@click="registrarUsuario"
 		style="width: 350px; height: 300px; margin-left: 100px; margin-top: 100px">
 		Registrar Usuario
 		<v-icon style="margin-left: 10px">mdi-account-plus</v-icon>
@@ -66,7 +67,7 @@
 		</v-row>
 	</v-footer>
 </template>
-
+<script src="./Menu.js"></script>
 <style>
 	.custom-btn {
 		transition: background-color 0.3s ease;
