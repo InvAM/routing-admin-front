@@ -14,8 +14,8 @@ const routes = [
 			import(/* webpackChunkName: "menu" */ "../views/Menu/Menu.vue"),
 	},
 	{
-		path: "/recuperarContraseña",
-		name: "RecuperarContraseña",
+		path: "/forgotPassword",
+		name: "ForgotPassword",
 		component: () =>
 			import(
 				/* webpackChunkName: "recuperarContraseña" */ "../views/RecuperarContraseña/recuperarContraseña.vue"
