@@ -8,7 +8,7 @@
 				display: flex;
 				margin: auto;
 				top: 80px;
-                border-radius: 20px;
+				border-radius: 20px;
 			">
 			<v-form>
 				<p
@@ -20,28 +20,35 @@
 					<v-text-field
 						label="Nombre"
 						variant="solo"
+						v-model="nombre"
 						class="form-field"></v-text-field>
 					<v-text-field
 						label="Apellido"
 						variant="solo"
+						v-model="apellido"
 						class="form-field"></v-text-field>
 					<v-text-field
 						label="DNI"
 						variant="solo"
+						v-model="dni"
 						class="form-field"></v-text-field>
 					<v-text-field
 						label="Edad"
 						variant="solo"
+						v-model="edad"
 						class="form-field"></v-text-field>
 					<v-select
+						
 						label="Participación"
-						:items="['Sí', 'No']"
-						v-model="participacion"
+						:items="Object.keys(participacion)"
+						v-model="participacionSeleccionado"
+						@change="actualizarIdParticipacion"
 						variant="solo"
 						class="form-field"></v-select>
 					<v-text-field
 						label="Nota Promedio"
 						variant="solo"
+						v-model="notapromedio"
 						class="form-field"></v-text-field>
 					<v-select
 						label="Nivel Académico"
@@ -72,6 +79,7 @@
 						variant="solo"
 						class="form-field"></v-select>
 					<v-select
+						multiple
 						label="Conocimiento Lenguajes Programación"
 						:items="Object.keys(conocimiento_lenguajes)"
 						v-model="lenguajeSeleccionado"
@@ -79,6 +87,7 @@
 						variant="solo"
 						class="form-field"></v-select>
 					<v-select
+						multiple
 						label="Habilidades Blandas"
 						:items="Object.keys(habilidades_blandas)"
 						v-model="habilidadBlandaSeleccionada"
@@ -86,6 +95,7 @@
 						variant="solo"
 						class="form-field"></v-select>
 					<v-select
+						multiple
 						label="Intereses"
 						:items="Object.keys(intereses)"
 						v-model="interesSeleccionado"
@@ -97,12 +107,14 @@
 					<v-btn
 						style="width: 200px; margin: auto; bottom: 20px"
 						class="boton_registrar"
-						>Registrar Usuario <v-icon style="margin-left: 5px">mdi-account-plus</v-icon></v-btn
+						@click="registrar"
+						>Registrar Usuario
+						<v-icon style="margin-left: 5px">mdi-account-plus</v-icon></v-btn
 					>
-                    <v-btn
-						style="width: 200px; margin: auto; bottom: 20px; margin-left: 10px;"
+					<v-btn
+						style="width: 200px; margin: auto; bottom: 20px; margin-left: 10px"
 						class="boton_registrar"
-                        @click="regresar"
+						@click="regresar"
 						>Atras <v-icon>mdi-arrow-left</v-icon></v-btn
 					>
 				</div>
@@ -117,7 +129,6 @@
 		height: 100vh; /* Usa 100vh para que ocupe el 100% de la altura de la ventana */
 	}
 	.container_form {
-        
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: space-between; /* Espacio entre los elementos */

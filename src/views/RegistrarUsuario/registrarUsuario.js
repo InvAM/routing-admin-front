@@ -2,6 +2,17 @@ import axios from "axios";
 export default {
 	name: "registrarUsuario",
 	data: () => ({
+		nombre: "",
+		apellido: "",
+		dni: "",
+		edad: "",
+		participacion: {
+			Si: 0,
+			No: 1,
+		},
+		participacionSeleccionado: null,
+		idParticipacion: null,
+		notapromedio: "",
 		// NIVELES ACADEMICOS
 		niveles_academicos: {
 			Estudiante: 0,
@@ -51,8 +62,8 @@ export default {
 			Swift: 12,
 			"C#": 13,
 		},
-		lenguajeSeleccionado: null,
-		idConocimientoLenguaje: null,
+		lenguajeSeleccionado: [],
+		idConocimientoLenguaje: [],
 
 		//HABILIDADES BLANDAS
 		habilidades_blandas: {
@@ -67,8 +78,8 @@ export default {
 			"Pensamiento crítico": 8,
 			"Aprendizaje rápido": 9,
 		},
-		habilidadBlandaSeleccionada: null,
-		idHabilidadesBlandas: null,
+		habilidadBlandaSeleccionada: [],
+		idHabilidadesBlandas: [],
 
 		//INTERESES
 		intereses: {
@@ -89,12 +100,48 @@ export default {
 			"Implementación de microservicios con Kubernetes": 14,
 			"Diseño de arquitecturas de sistemas distribuidos": 15,
 		},
-		interesSeleccionado: null,
-		idIntereses: null,
+		interesSeleccionado: [],
+		idIntereses: [],
 	}),
 	methods: {
+		registrar() {
+			this.actualizarIdParticipacion();
+			this.actualizarIdNivelAcademico();
+			this.actualizarIdHabilidadProgramacion();
+			this.actualizarIdHabilidadesMatematicas();
+			this.actualizarIDCondicionEstudiante();
+			this.actualizarIDLenguaje();
+			this.actualizarIDHabilidadBlanda();
+			this.actualizarIDInteres();
+
+			console.log("Nombre:", this.nombre);
+			console.log("Apellido:", this.apellido);
+			console.log("DNI:", this.dni);
+			console.log("Edad:", this.edad);
+			console.log("Participación (ID):", this.idParticipacion);
+			console.log("Nota Promedio:", this.notapromedio);
+			console.log("Nivel Académico (ID):", this.idNivelAcademico);
+			console.log(
+				"Habilidades de Programación (ID):",
+				this.idHabilidadesProgramacion
+			);
+			console.log(
+				"Habilidades Matemáticas (ID):",
+				this.idHabilidadesMatematicas
+			);
+			console.log("Condición Estudiante (ID):", this.idCondicionEstudiante);
+			console.log(
+				"Conocimiento Lenguajes de Programación (ID):",
+				this.idConocimientoLenguaje
+			);
+			console.log("Habilidades Blandas (ID):", this.idHabilidadesBlandas);
+			console.log("Intereses (ID):", this.idIntereses);
+		},
 		regresar() {
 			this.$router.push("/menu");
+		},
+		actualizarIdParticipacion() {
+			this.idParticipacion = this.participacion[this.participacionSeleccionado];
 		},
 		actualizarIdNivelAcademico() {
 			this.idNivelAcademico =
@@ -113,15 +160,19 @@ export default {
 				this.condicon_estudiante[this.condiconEstudianteSeleccionada];
 		},
 		actualizarIDLenguaje() {
-			this.idConocimientoLenguaje =
-				this.conocimiento_lenguajes[this.lenguajeSeleccionado];
+			this.idConocimientoLenguaje = this.lenguajeSeleccionado.map(
+				(item) => this.conocimiento_lenguajes[item]
+			);
 		},
 		actualizarIDHabilidadBlanda() {
-			this.idHabilidadesBlandas =
-				this.habilidades_blandas[this.habilidadBlandaSeleccionada];
+			this.idHabilidadesBlandas = this.habilidadBlandaSeleccionada.map(
+				(item) => this.habilidades_blandas[item]
+			);
 		},
 		actualizarIDInteres() {
-			this.idIntereses = this.intereses[this.interesSeleccionado];
+			this.idIntereses = this.interesSeleccionado.map(
+				(item) => this.intereses[item]
+			);
 		},
 	},
 };
