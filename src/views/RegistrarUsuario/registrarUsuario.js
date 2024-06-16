@@ -2,177 +2,276 @@ import axios from "axios";
 export default {
 	name: "registrarUsuario",
 	data: () => ({
-		nombre: "",
-		apellido: "",
-		dni: "",
-		edad: "",
-		participacion: {
-			Si: 0,
-			No: 1,
+		frmUsuario: {
+			nombre: "",
+			apellido: "",
+			dni: "",
+			edad: "",
+			IDGenero: "",
+			descGenero: "",
+			IDGraduacion: "",
+			desGraduacion: "",
+			IDCiclo: "",
+			desCiclo: "",
+			IDParticipacion: "",
+			desParticipacion: "",
+			IDNivelAcademico: "",
+			desNivelAcademico: "",
+			IDHabilidadesprg: "",
+			desHabilidadesprg: "",
+			IDHabilidadesmat: "",
+			desHabilidadesmat: "",
+			IDCondicion: "",
+			desCondicion: "",
+			IDLenguaje: [],
+			desLenguaje: [],
+			IDHabilidadesbla: [],
+			desHabilidadesbla: [],
+			IDIntereses: [],
+			desIntereses: [],
 		},
-		participacionSeleccionado: null,
-		idParticipacion: null,
-		notapromedio: "",
-		// NIVELES ACADEMICOS
-		niveles_academicos: {
-			Estudiante: 0,
-			Graduado: 1,
-			Universitario: 2,
-		},
-		nivelAcademicoSeleccionado: null,
-		idNivelAcademico: null,
-		// HABILIDADES PROGRAMACION
-		habilidades_programacion: {
-			Principiante: 0,
-			Intermedio: 1,
-			Avanzado: 2,
-		},
-		habilidadProgramacionSeleccionada: null,
-		idHabilidadesProgramacion: null,
-		// HABILIDADES MATEMATICAS
-		habilidades_matematicas: {
-			Principiante: 0,
-			Intermedio: 1,
-			Avanzado: 2,
-		},
-		habilidadMatematicaSeleccionada: null,
-		idHabilidadesMatematicas: null,
-		// CONDICION ESTUDIANTE
-		condicon_estudiante: {
-			Cursando: 0,
-			Egresado: 1,
-		},
-		condiconEstudianteSeleccionada: null,
-		idCondicionEstudiante: null,
-
-		//CONOCIMIENTO LENGUAJES DE PROGRAMACION
-		conocimiento_lenguajes: {
-			JavaScript: 0,
-			TypeScript: 1,
-			React: 2,
-			Angular: 3,
-			Python: 4,
-			Java: 5,
-			"C++": 6,
-			HTML: 7,
-			CSS: 8,
-			Scala: 9,
-			"Vue.js": 10,
-			Kotlin: 11,
-			Swift: 12,
-			"C#": 13,
-		},
-		lenguajeSeleccionado: [],
-		idConocimientoLenguaje: [],
-
-		//HABILIDADES BLANDAS
-		habilidades_blandas: {
-			"Trabajo en equipo": 0,
-			"Comunicación efectiva": 1,
-			"Gestión del tiempo": 2,
-			"Resolución de conflictos": 3,
-			Creatividad: 4,
-			Adaptabilidad: 5,
-			Liderazgo: 6,
-			"Resolución de problemas": 7,
-			"Pensamiento crítico": 8,
-			"Aprendizaje rápido": 9,
-		},
-		habilidadBlandaSeleccionada: [],
-		idHabilidadesBlandas: [],
-
-		//INTERESES
-		intereses: {
-			"Desarrollo de aplicaciones web modernas": 0,
-			"UI/UX Design": 1,
-			"Machine Learning": 2,
-			"Desarrollo de videojuegos": 3,
-			"Diseño de páginas web": 4,
-			"Desarrollo de aplicaciones empresariales": 5,
-			"Gestión de proyectos": 6,
-			"Desarrollo de aplicaciones web dinámicas": 7,
-			"Diseño de interfaces intuitivas": 8,
-			"Desarrollo de aplicaciones móviles": 9,
-			"Seguridad informática": 10,
-			"Bases de datos": 11,
-			"Experiencia de usuario": 12,
-			"Análisis forense digital": 13,
-			"Implementación de microservicios con Kubernetes": 14,
-			"Diseño de arquitecturas de sistemas distribuidos": 15,
-		},
-		interesSeleccionado: [],
-		idIntereses: [],
+		Select: false,
+		generos: [],
+		graduaciones: [],
+		ciclos: [],
+		participaciones: [],
+		nivelesacademicos: [],
+		habilidadesprg: [],
+		habilidadesmat: [],
+		condiciones: [],
+		lenguajes: [],
+		habilidadesbla: [],
+		intereses: [],
+		selectedGenero: null,
+		selectedGraduacion: null,
+		selectedCiclo: null,
+		selectedParticipacion: null,
+		selectedNivelAcademico: null,
+		selectedHabilidadesprg: null,
+		selectedHabilidadesmat: null,
+		selectedCondicion: null,
+		selectedLenguaje: [],
+		selectedHabilidadesbla: [],
+		selectedIntereses: [],
 	}),
+	created() {
+		this.getGenero();
+		this.getGraduacion();
+		this.getCiclo();
+		this.getParticipacion();
+		this.getNivelAcademico();
+		this.getHabilidadesprg();
+		this.getHabilidadesmat();
+		this.getCondicion();
+		this.getLenguaje();
+		this.getHabilidadesbla();
+		this.getInteres();
+	},
+	watch: {
+		selectedGenero(val) {
+			if (val) {
+				const genero = this.generos.find(
+					(genero) => genero.Descripcion_Genero === val
+				);
+				this.frmUsuario.descGenero = genero.Descripcion_Genero;
+				this.frmUsuario.IDGenero = genero.IDGenero;
+			}
+		},
+		selectedGraduacion(val) {
+			if (val) {
+				const graduacion = this.graduaciones.find(
+					(graduacion) => graduacion.Descripcion_Graduacion === val
+				);
+				this.frmUsuario.desGraduacion = graduacion.Descripcion_Graduacion;
+				this.frmUsuario.IDGraduacion = graduacion.IDGraduacion;
+			}
+		},
+		selectedCiclo(val) {
+			if (val) {
+				const ciclo = this.ciclos.find(
+					(ciclo) => ciclo.Descripcion_Ciclo === val
+				);
+				this.frmUsuario.desCiclo = ciclo.Descripcion_Ciclo;
+				this.frmUsuario.IDCiclo = ciclo.IDCiclo;
+			}
+		},
+		selectedParticipacion(val) {
+			if (val) {
+				const participacion = this.participaciones.find(
+					(participacion) => participacion.Descripcion_participacion === val
+				);
+				this.frmUsuario.desParticipacion =
+					participacion.Descripcion_participacion;
+				this.frmUsuario.IDParticipacion = participacion.IDParticipacion;
+			}
+		},
+		selectedNivelAcademico(val) {
+			if (val) {
+				const NivelAcademico = this.nivelesacademicos.find(
+					(NivelAcademico) => NivelAcademico.Descripcion_NivelAcademico === val
+				);
+				this.frmUsuario.desNivelAcademico =
+					NivelAcademico.Descripcion_NivelAcademico;
+				this.frmUsuario.IDNivelAcademico = NivelAcademico.IDNivelAcademico;
+			}
+		},
+		selectedHabilidadesprg(val) {
+			if (val) {
+				const habilidadprg = this.habilidadesprg.find(
+					(habilidadprg) => habilidadprg.Descripcion_Habilidadesprg === val
+				);
+				this.frmUsuario.desHabilidadesprg =
+					habilidadprg.Descripcion_Habilidadesprg;
+				this.frmUsuario.IDHabilidadesprg = habilidadprg.IDHabilidadesprg;
+			}
+		},
+		selectedHabilidadesmat(val) {
+			if (val) {
+				const habilidadmat = this.habilidadesmat.find(
+					(habilidadmat) => habilidadmat.Descripcion_Habilidadesmat === val
+				);
+				this.frmUsuario.desHabilidadesmat =
+					habilidadmat.Descripcion_Habilidadesmat;
+				this.frmUsuario.IDHabilidadesmat = habilidadmat.IDHabilidadesmat;
+			}
+		},
+		selectedCondicion(val) {
+			if (val) {
+				const condicion = this.condiciones.find(
+					(condicion) => condicion.Descripcion_Condicion === val
+				);
+				this.frmUsuario.desCondicion = condicion.Descripcion_Condicion;
+				this.frmUsuario.IDCondicion = condicion.IDCondicion;
+			}
+		},
+		selectedLenguaje(val) {
+			this.frmUsuario.desLenguaje = val;
+			this.frmUsuario.IDLenguaje = val
+				.map((lenguaje) => {
+					const foundLenguaje = this.lenguajes.find(
+						(l) => l.Descripcion_Lenguaje === lenguaje
+					);
+					return foundLenguaje ? foundLenguaje.IDLenguaje : null;
+				})
+				.filter((id) => id !== null);
+		},
+		selectedHabilidadesbla(val) {
+			this.frmUsuario.desHabilidadesbla = val;
+			this.frmUsuario.IDHabilidadesbla = val
+				.map((habilidadbla) => {
+					const foundHabilidad = this.habilidadesbla.find(
+						(h) => h.Descripcion_Habilidadesbla === habilidadbla
+					);
+					return foundHabilidad ? foundHabilidad.IDHabilidadesbla : null;
+				})
+				.filter((id) => id !== null);
+		},
+		selectedIntereses(val) {
+			this.frmUsuario.desIntereses = val;
+			this.frmUsuario.IDIntereses = val
+				.map((interes) => {
+					const foundInteres = this.intereses.find(
+						(i) => i.Descripcion_Interes === interes
+					);
+					return foundInteres ? foundInteres.IDInteres : null;
+				})
+				.filter((id) => id !== null);
+		},
+	},
 	methods: {
-		registrar() {
-			this.actualizarIdParticipacion();
-			this.actualizarIdNivelAcademico();
-			this.actualizarIdHabilidadProgramacion();
-			this.actualizarIdHabilidadesMatematicas();
-			this.actualizarIDCondicionEstudiante();
-			this.actualizarIDLenguaje();
-			this.actualizarIDHabilidadBlanda();
-			this.actualizarIDInteres();
-
-			console.log("Nombre:", this.nombre);
-			console.log("Apellido:", this.apellido);
-			console.log("DNI:", this.dni);
-			console.log("Edad:", this.edad);
-			console.log("Participación (ID):", this.idParticipacion);
-			console.log("Nota Promedio:", this.notapromedio);
-			console.log("Nivel Académico (ID):", this.idNivelAcademico);
-			console.log(
-				"Habilidades de Programación (ID):",
-				this.idHabilidadesProgramacion
-			);
-			console.log(
-				"Habilidades Matemáticas (ID):",
-				this.idHabilidadesMatematicas
-			);
-			console.log("Condición Estudiante (ID):", this.idCondicionEstudiante);
-			console.log(
-				"Conocimiento Lenguajes de Programación (ID):",
-				this.idConocimientoLenguaje
-			);
-			console.log("Habilidades Blandas (ID):", this.idHabilidadesBlandas);
-			console.log("Intereses (ID):", this.idIntereses);
+		getGenero() {
+			axios
+				.get("http://localhost:3000/genero")
+				.then((res) => {
+					this.generos = res.data;
+				})
+				.catch((e) => e);
 		},
 		regresar() {
 			this.$router.push("/menu");
 		},
-		actualizarIdParticipacion() {
-			this.idParticipacion = this.participacion[this.participacionSeleccionado];
+		getGraduacion() {
+			axios
+				.get("http://localhost:3000/graduacion")
+				.then((res) => {
+					this.graduaciones = res.data;
+				})
+				.catch((e) => e);
 		},
-		actualizarIdNivelAcademico() {
-			this.idNivelAcademico =
-				this.niveles_academicos[this.nivelAcademicoSeleccionado];
+		getCiclo() {
+			axios
+				.get("http://localhost:3000/ciclo")
+				.then((res) => {
+					this.ciclos = res.data;
+				})
+				.catch((error) => e);
 		},
-		actualizarIdHabilidadProgramacion() {
-			this.idHabilidadesProgramacion =
-				this.habilidades_programacion[this.habilidadProgramacionSeleccionada];
+		getParticipacion() {
+			axios
+				.get("http://localhost:3000/participacion")
+				.then((res) => {
+					this.participaciones = res.data;
+				})
+				.catch((e) => e);
 		},
-		actualizarIdHabilidadesMatematicas() {
-			this.idHabilidadesMatematicas =
-				this.habilidades_matematicas[this.habilidadMatematicaSeleccionada];
+		getNivelAcademico() {
+			axios
+				.get("http://localhost:3000/nivelacademico")
+				.then((res) => {
+					this.nivelesacademicos = res.data;
+				})
+				.catch((r) => r);
 		},
-		actualizarIDCondicionEstudiante() {
-			this.idCondicionEstudiante =
-				this.condicon_estudiante[this.condiconEstudianteSeleccionada];
+		getHabilidadesprg() {
+			axios
+				.get("http://localhost:3000/habilidadesprg")
+				.then((res) => {
+					this.habilidadesprg = res.data;
+				})
+				.catch((r) => r);
 		},
-		actualizarIDLenguaje() {
-			this.idConocimientoLenguaje = this.lenguajeSeleccionado.map(
-				(item) => this.conocimiento_lenguajes[item]
-			);
+		getHabilidadesmat() {
+			axios
+				.get("http://localhost:3000/habilidadesmat")
+				.then((res) => {
+					this.habilidadesmat = res.data;
+				})
+				.catch((r) => r);
 		},
-		actualizarIDHabilidadBlanda() {
-			this.idHabilidadesBlandas = this.habilidadBlandaSeleccionada.map(
-				(item) => this.habilidades_blandas[item]
-			);
+		getCondicion() {
+			axios
+				.get("http://localhost:3000/condicion")
+				.then((res) => {
+					this.condiciones = res.data;
+				})
+				.catch((r) => r);
 		},
-		actualizarIDInteres() {
-			this.idIntereses = this.interesSeleccionado.map(
-				(item) => this.intereses[item]
-			);
+		getLenguaje() {
+			axios
+				.get("http://localhost:3000/lenguaje")
+				.then((res) => {
+					this.lenguajes = res.data;
+				})
+				.catch((r) => r);
+		},
+		getHabilidadesbla() {
+			axios
+				.get("http://localhost:3000/habilidadesbla")
+				.then((res) => {
+					this.habilidadesbla = res.data;
+				})
+				.catch((r) => r);
+		},
+		getInteres() {
+			axios
+				.get("http://localhost:3000/interes")
+				.then((res) => {
+					this.intereses = res.data;
+				})
+				.catch((r) => r);
+		},
+		registrar() {
+			console.log(this.frmUsuario);
 		},
 	},
 };

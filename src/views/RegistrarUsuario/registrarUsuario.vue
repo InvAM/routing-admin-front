@@ -7,8 +7,9 @@
 				position: relative;
 				display: flex;
 				margin: auto;
-				top: 80px;
+				top: 0px;
 				border-radius: 20px;
+				margin-bottom: 33px;
 			">
 			<v-form>
 				<p
@@ -20,86 +21,121 @@
 					<v-text-field
 						label="Nombre"
 						variant="solo"
-						v-model="nombre"
+						v-model="frmUsuario.nombre"
 						class="form-field"></v-text-field>
 					<v-text-field
 						label="Apellido"
 						variant="solo"
-						v-model="apellido"
+						v-model="frmUsuario.apellido"
 						class="form-field"></v-text-field>
 					<v-text-field
 						label="DNI"
 						variant="solo"
-						v-model="dni"
+						v-model="frmUsuario.dni"
 						class="form-field"></v-text-field>
 					<v-text-field
 						label="Edad"
 						variant="solo"
-						v-model="edad"
+						v-model="frmUsuario.edad"
 						class="form-field"></v-text-field>
 					<v-select
-						
+						label="Genero"
+						v-model="selectedGenero"
+						:items="generos.map((genero) => genero.Descripcion_Genero)"
+						variant="solo"
+						class="form-field"></v-select>
+					<v-select
+						label="Año de Graduacion"
+						v-model="selectedGraduacion"
+						:items="
+							graduaciones.map(
+								(graduacion) => graduacion.Descripcion_Graduacion
+							)
+						"
+						variant="solo"
+						class="form-field"></v-select>
+					<v-select
+						label="Ciclo"
+						:items="ciclos.map((ciclo) => ciclo.Descripcion_Ciclo)"
+						v-model="selectedCiclo"
+						variant="solo"
+						class="form-field"></v-select>
+					<v-select
 						label="Participación"
-						:items="Object.keys(participacion)"
-						v-model="participacionSeleccionado"
-						@change="actualizarIdParticipacion"
+						:items="
+							participaciones.map(
+								(participacion) => participacion.Descripcion_participacion
+							)
+						"
+						v-model="selectedParticipacion"
 						variant="solo"
 						class="form-field"></v-select>
 					<v-text-field
 						label="Nota Promedio"
 						variant="solo"
-						v-model="notapromedio"
+						v-model="frmUsuario.notapromedio"
 						class="form-field"></v-text-field>
 					<v-select
 						label="Nivel Académico"
-						:items="Object.keys(niveles_academicos)"
-						v-model="nivelAcademicoSeleccionado"
-						@change="actualizarIdNivelAcademico"
+						:items="
+							nivelesacademicos.map(
+								(nivelacademico) => nivelacademico.Descripcion_NivelAcademico
+							)
+						"
+						v-model="selectedNivelAcademico"
 						variant="solo"
 						class="form-field"></v-select>
 					<v-select
 						label="Habilidades de Programación"
-						:items="Object.keys(habilidades_programacion)"
-						v-model="habilidadProgramacionSeleccionada"
-						@change="actualizarIdHabilidadProgramacion"
+						:items="
+							habilidadesprg.map(
+								(habilidadprg) => habilidadprg.Descripcion_Habilidadesprg
+							)
+						"
+						v-model="selectedHabilidadesprg"
 						variant="solo"
 						class="form-field"></v-select>
 					<v-select
 						label="Habilidades Matemáticas"
-						:items="Object.keys(habilidades_matematicas)"
-						v-model="habilidadMatematicaSeleccionada"
-						@change="actualizarIdHabilidadesMatematicas"
+						:items="
+							habilidadesmat.map(
+								(habilidadmat) => habilidadmat.Descripcion_Habilidadesmat
+							)
+						"
+						v-model="selectedHabilidadesmat"
 						variant="solo"
 						class="form-field"></v-select>
 					<v-select
 						label="Condicion Estudiante"
-						:items="Object.keys(condicon_estudiante)"
-						v-model="condiconEstudianteSeleccionada"
-						@change="actualizarIDCondicionEstudiante"
+						:items="
+							condiciones.map((condicion) => condicion.Descripcion_Condicion)
+						"
+						v-model="selectedCondicion"
 						variant="solo"
 						class="form-field"></v-select>
 					<v-select
 						multiple
 						label="Conocimiento Lenguajes Programación"
-						:items="Object.keys(conocimiento_lenguajes)"
-						v-model="lenguajeSeleccionado"
-						@change="actualizarIDLenguaje"
+						:items="lenguajes.map((lenguaje) => lenguaje.Descripcion_Lenguaje)"
+						v-model="selectedLenguaje"
 						variant="solo"
 						class="form-field"></v-select>
 					<v-select
 						multiple
 						label="Habilidades Blandas"
-						:items="Object.keys(habilidades_blandas)"
-						v-model="habilidadBlandaSeleccionada"
-						@change="actualizarIDHabilidadBlanda"
+						:items="
+							habilidadesbla.map(
+								(habilidadbla) => habilidadbla.Descripcion_Habilidadesbla
+							)
+						"
+						v-model="selectedHabilidadesbla"
 						variant="solo"
 						class="form-field"></v-select>
 					<v-select
 						multiple
 						label="Intereses"
-						:items="Object.keys(intereses)"
-						v-model="interesSeleccionado"
-						@change="actualizarIDInteres"
+						:items="intereses.map((interes) => interes.Descripcion_Interes)"
+						v-model="selectedIntereses"
 						variant="solo"
 						style="margin-right: 10px"
 						class="form-field"></v-select>
@@ -125,8 +161,11 @@
 
 <style>
 	.registrarUsuario {
+		display: flex;
+		justify-content: center; /* Centra el contenido horizontalmente */
+		align-items: center; /* Centra el contenido verticalmente */
+		min-height: 100vh; /* Establece la altura mínima como el 100% de la altura de la ventana */
 		background-color: #334155;
-		height: 100vh; /* Usa 100vh para que ocupe el 100% de la altura de la ventana */
 	}
 	.container_form {
 		display: flex;
