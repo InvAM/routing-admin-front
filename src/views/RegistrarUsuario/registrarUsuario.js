@@ -8,6 +8,7 @@ export default {
 			dni: "",
 			edad: "",
 			IDGenero: "",
+			notapromedio: "",
 			descGenero: "",
 			IDGraduacion: "",
 			desGraduacion: "",
@@ -271,7 +272,19 @@ export default {
 				.catch((r) => r);
 		},
 		registrar() {
-			console.log(this.frmUsuario);
+			var data = {
+				edad: this.frmUsuario.edad,
+				nivel_academico: this.frmUsuario.IDNivelAcademico,
+				habilidad_programacion: this.frmUsuario.IDHabilidadesprg,
+				habilidad_matematicas: this.frmUsuario.IDHabilidadesmat,
+				participacion_club_tecnologia: this.frmUsuario.IDParticipacion,
+				nota_promedio: this.frmUsuario.notapromedio,
+				condicion_estudiante: this.frmUsuario.IDCondicion,
+				conocimiento_lenguajes: this.frmUsuario.IDLenguaje,
+				habilidades_blandas: this.frmUsuario.IDHabilidadesbla,
+				intereses: this.frmUsuario.IDIntereses,
+			};
+			console.log(data);
 		},
 	},
 };
