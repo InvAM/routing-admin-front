@@ -63,7 +63,6 @@ export default {
 				const genero = this.generos.find((g) => g.Descripcion_Genero === val);
 				if (genero) {
 					this.selectedUser.IDGenero = genero.IDGenero;
-					console.log("IDGenero:", this.selectedUser.IDGenero);
 				}
 			}
 		},
@@ -74,7 +73,6 @@ export default {
 				);
 				if (graduacion) {
 					this.selectedUser.IDGraduacion = graduacion.IDGraduacion;
-					console.log("IDGraduacion", this.selectedUser.IDGraduacion);
 				}
 			}
 		},
@@ -83,7 +81,6 @@ export default {
 				const ciclo = this.ciclos.find((g) => g.Descripcion_Ciclo === val);
 				if (ciclo) {
 					this.selectedUser.IDCiclo = ciclo.IDCiclo;
-					console.log("IDCiclo", this.selectedUser.IDCiclo);
 				}
 			}
 		},
@@ -94,7 +91,6 @@ export default {
 				);
 				if (participacion) {
 					this.selectedUser.IDParticipacion = participacion.IDParticipacion;
-					console.log("IDParticipacion", this.selectedUser.IDParticipacion);
 				}
 			}
 		},
@@ -105,7 +101,6 @@ export default {
 				);
 				if (niveleacademico) {
 					this.selectedUser.IDNivelAcademico = niveleacademico.IDNivelAcademico;
-					console.log("IDNivelAcademico", this.selectedUser.IDNivelAcademico);
 				}
 			}
 		},
@@ -116,7 +111,6 @@ export default {
 				);
 				if (habilidadprg) {
 					this.selectedUser.IDHabilidadesprg = habilidadprg.IDHabilidadesprg;
-					console.log("IDHabilidadesprg", this.selectedUser.IDHabilidadesprg);
 				}
 			}
 		},
@@ -127,7 +121,6 @@ export default {
 				);
 				if (habilidadmat) {
 					this.selectedUser.IDHabilidadesmat = habilidadmat.IDHabilidadesmat;
-					console.log("IDHabilidadesmat", this.selectedUser.IDHabilidadesmat);
 				}
 			}
 		},
@@ -138,7 +131,6 @@ export default {
 				);
 				if (condicion) {
 					this.selectedUser.IDCondicion = condicion.IDCondicion;
-					console.log("IDCondicion", this.selectedUser.IDCondicion);
 				}
 			}
 		},
@@ -154,10 +146,6 @@ export default {
 					.filter((id) => id !== null);
 
 				this.selectedUser.conocimiento_lenguajes = selectedIds; // Almacena los IDs seleccionados
-				console.log(
-					"IDs de lenguajes seleccionados:",
-					this.selectedUser.conocimiento_lenguajes
-				);
 			} else {
 				this.selectedUser.conocimiento_lenguajes = [];
 			}
@@ -174,10 +162,6 @@ export default {
 					.filter((id) => id !== null);
 
 				this.selectedUser.habilidades_blandas = selectedIds; // Almacena los IDs seleccionados
-				console.log(
-					"IDs de habilidades blandas seleccionados:",
-					this.selectedUser.habilidades_blandas
-				);
 			} else {
 				this.selectedUser.habilidades_blandas = [];
 			}
@@ -194,10 +178,6 @@ export default {
 					.filter((id) => id !== null);
 
 				this.selectedUser.IDInteres = selectedIds; // Almacena los IDs seleccionados
-				console.log(
-					"IDs de intereses seleccionados:",
-					this.selectedUser.IDInteres
-				);
 			} else {
 				this.selectedUser.IDInteres = [];
 			}
@@ -290,7 +270,6 @@ export default {
 					this.generos = res.data;
 				});
 			} catch (error) {
-				console.error("Error al obtener los géneros:", error);
 				return []; // En caso de error, devuelve un array vacío
 			}
 		},
@@ -446,25 +425,22 @@ export default {
 								habilidadesbla,
 								interes,
 							};
-							console.log(this.selectedUser);
+
 							this.originalUser = { ...this.selectedUser };
 
 							this.editDialog = true;
 						} else {
-							console.error("No se encontró el usuario con ID:", IDUser);
 							this.mensaje = "No se encontró el usuario con ID";
 							this.typemsg = "error";
 							this.dialogError = true;
 						}
 					} catch (error) {
-						console.error("Error al obtener el usuario desde Firebase:", error);
 						this.mensaje = "Error al obtener el usuario desde Firebase";
 						this.typemsg = "error";
 						this.dialogError = true;
 					}
 				})
 				.catch((error) => {
-					console.error("Error al obtener el usuario:", error);
 					this.mensaje = "Error al obtener el usuario";
 					this.typemsg = "error";
 					this.dialogError = true;
@@ -528,10 +504,84 @@ export default {
 			if (this.selectedUser.IDInteres !== this.originalUser.IDInteres) {
 				cambios["IDInteres"] = this.selectedUser.IDInteres;
 			}
-			const valoresFinales = { ...this.selectedUser };
 
-			console.log("Valores finales:", valoresFinales);
-			// Enviar cambios al backend o hacer lo que sea necesario con los cambios
+			const firebaseConfig = {
+				apiKey: "AIzaSyAdbxgtIebBfPyyIAUNiJIi870Z8DNBOuM",
+				authDomain: "ucv-rec-api.firebaseapp.com",
+				projectId: "ucv-rec-api",
+				storageBucket: "ucv-rec-api.appspot.com",
+				messagingSenderId: "355897289132",
+				appId: "1:355897289132:web:f0dccd53d0e9d7aeaf7209",
+			};
+			const firebaseApp = initializeApp(firebaseConfig);
+			const db = getFirestore(firebaseApp);
+			var data = {
+				edad: this.selectedUser.Edad,
+				nivel_academico: this.selectedUser.IDNivelAcademico,
+				habilidad_programacion: this.selectedUser.IDHabilidadesprg,
+				habilidad_matematicas: this.selectedUser.IDHabilidadesmat,
+				participacion_club_tecnologia: this.selectedUser.IDParticipacion,
+				nota_promedio: this.selectedUser.nota_promedio,
+				condicion_estudiante: this.selectedUser.IDCondicion,
+				conocimiento_lenguajes: this.selectedUser.conocimiento_lenguajes,
+				habilidades_blandas: this.selectedUser.habilidades_blandas,
+				intereses: this.selectedUser.IDInteres,
+			};
+			const userId = this.selectedUser.IDia;
+
+			for (const key in data) {
+				if (
+					data[key] === "" ||
+					(Array.isArray(data[key]) && data[key].length === 0)
+				) {
+					this.mensaje = `Faltan campos por completar`;
+					this.typemsg = "error";
+					this.dialogError = true;
+					return;
+				}
+			}
+
+			try {
+				setDoc(doc(db, "users-ia", userId), data);
+			} catch (error) {
+				this.mensaje = "Error al agregar el documento a Firebase";
+				this.typemsg = "error";
+				this.dialogError = true;
+				return;
+			}
+			var data_backend = {
+				Nombre: this.selectedUser.Nombre,
+				Apellido: this.selectedUser.Apellido,
+				DNI: this.selectedUser.DNI,
+				Edad: this.selectedUser.Edad,
+				IDGenero: this.selectedUser.IDGenero,
+				IDGraduacion: this.selectedUser.IDGraduacion,
+				IDCiclo: this.selectedUser.IDCiclo,
+			};
+			for (const key in data_backend) {
+				if (
+					data_backend[key] === "" ||
+					(Array.isArray(data_backend[key]) && data_backend[key].length === 0)
+				) {
+					this.mensaje = `Faltan campos por completar`;
+					this.typemsg = "error";
+					this.dialogError = true;
+					return;
+				}
+			}
+			try {
+				const response = axios.patch(
+					`http://localhost:3000/users/${this.selectedUser.IDUser}`,
+					data_backend
+				);
+				this.mensaje = `Se registró correctamente al cliente`;
+				this.typemsg = "success";
+				this.dialogVisible = true;
+			} catch (error) {
+				this.mensaje = "Error al enviar datos al backend";
+				this.typemsg = "error";
+				this.dialogError = true;
+			}
 		},
 	},
 };

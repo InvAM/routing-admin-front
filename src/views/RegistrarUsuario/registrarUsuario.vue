@@ -43,20 +43,33 @@
 		<div
 			style="
 				width: 800px;
-				background-color: rgb(146, 139, 139);
+				background-color: #0b0b0b;
 				position: relative;
 				display: flex;
 				margin: auto;
-				top: -180px;
+				top: 30px;
 				border-radius: 20px;
 				margin-bottom: 33px;
 			">
 			<v-form>
 				<p
-					style="text-align: center; padding-bottom: 10px; padding-top: 10px"
+					style="
+						text-align: center;
+						padding-bottom: 10px;
+						padding-top: 10px;
+						color: white;
+					"
 					class="text-h6">
 					Registrar Usuario
 				</p>
+				<v-divider
+					class="border-opacity-100"
+					style="
+						margin-bottom: 20px;
+						width: 760px;
+						margin-left: 15px;
+						color: white;
+					"></v-divider>
 				<div class="container_form">
 					<v-text-field
 						label="Nombre"
@@ -197,14 +210,27 @@
 						class="form-field"></v-select>
 
 					<v-btn
-						style="width: 200px; margin: auto; bottom: 20px"
+						style="
+							width: 200px;
+							margin: auto;
+							bottom: 20px;
+							background-color: #1b1253;
+							color: white;
+						"
 						class="boton_registrar"
 						@click="registrar"
 						>Registrar Usuario
 						<v-icon style="margin-left: 5px">mdi-account-plus</v-icon></v-btn
 					>
 					<v-btn
-						style="width: 200px; margin: auto; bottom: 20px; margin-left: 10px"
+						style="
+							width: 200px;
+							margin: auto;
+							bottom: 20px;
+							margin-left: 10px;
+							background-color: #1b1253;
+							color: white;
+						"
 						class="boton_registrar"
 						@click="regresar"
 						>Atras <v-icon>mdi-arrow-left</v-icon></v-btn
@@ -259,17 +285,72 @@
 					</v-card-actions>
 				</v-card>
 			</v-dialog>
+			<v-dialog v-model="credencialesDialog" :width="400" class="credenciales">
+				<v-card
+					style="background-color: #0b0b0b; border-radius: 20px; height: 400px">
+					<v-card-title
+						class="headline font-weight-black text-h6"
+						style="color: white; margin: auto"
+						>Crear Credenciales</v-card-title
+					>
+					<v-card-text>
+						<v-form>
+							<p style="color: white; padding-bottom: 10px">Usuario</p>
+							<v-text-field v-model="username" variant="solo" required>
+								<v-icon>mdi-account</v-icon>
+							</v-text-field>
+							<p style="color: white; padding-bottom: 10px">Contraseña</p>
+							<v-text-field
+								v-model="password"
+								variant="solo"
+								:type="password"
+								required
+								><v-icon>mdi-lock</v-icon></v-text-field
+							>
+							<v-btn color="#821902" class="mt-3" type="submit" block @click="createCredenciales">
+								Crear
+							</v-btn>
+						</v-form>
+					</v-card-text>
+				</v-card>
+			</v-dialog>
+			<v-dialog v-model="dialogCredencialesAlert" :width="500">
+				<v-card color="#47d847">
+					<v-card-title>
+						<span class="mx-auto" style="color: white"
+							>¡Credenciales Creadas!</span
+						>
+					</v-card-title>
+					<v-card-text>
+						<v-alert
+							v-if="mensaje !== ''"
+							color="white"
+							:type="typemsg"
+							outlined
+							>{{ mensaje }}</v-alert
+						>
+					</v-card-text>
+					<v-card-actions style="display: flex; justify-content: center">
+						<v-btn
+							style="background-color: #033076; color: #ffffff"
+							@click="aceptar">
+							Aceptar
+						</v-btn>
+					</v-card-actions>
+				</v-card>
+			</v-dialog>
 		</div>
 	</div>
 </template>
 
 <style>
 	.registrarUsuario {
-		display: flex;
-		justify-content: center; /* Centra el contenido horizontalmente */
-		align-items: center; /* Centra el contenido verticalmente */
-		min-height: 100vh; /* Establece la altura mínima como el 100% de la altura de la ventana */
-		background-color: #334155;
+		background: url("../../assets/Fondo_2.jpg");
+		background-size: cover;
+		background-position: center;
+		position: fixed;
+		width: 100%;
+		height: 100%;
 	}
 	.container_form {
 		display: flex;
@@ -283,6 +364,14 @@
 		margin-bottom: 20px; /* Espacio entre los campos */
 		box-sizing: border-box; /* Asegura que el padding y el margin se incluyan en el tamaño del elemento */
 		margin-left: 10px;
+	}
+
+	.credenciales {
+		width: 100%;
+		height: 100%;
+		background-size: cover;
+		background-position: center;
+		background-image: url("../../assets/Fondo_2.jpg");
 	}
 </style>
 

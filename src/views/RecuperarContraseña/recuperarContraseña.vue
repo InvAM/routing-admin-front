@@ -47,7 +47,7 @@
 			">
 			<v-icon
 				style="
-					background-color: #1e40af;
+					background-color: #928B8B;
 					width: 600px;
 					height: 84px;
 					border-top-left-radius: 50px;
@@ -57,7 +57,7 @@
 			>
 			<div
 				style="
-					background-color: #1e40af;
+					background-color: #928B8B;
 					width: 600px;
 					border-bottom-left-radius: 50px;
 					border-bottom-right-radius: 50px;
@@ -140,7 +140,9 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		background-color: #111827; /* Color de fondo para toda la página */
+		background-position: center;
+		background-size: cover;
+		background-image: url("../../assets/fondofinal.jpg"); /* Color de fondo para toda la página */
 	}
 	.custom-text-field .v-messages__message {
 		font-size: 12px; /* Ajusta el tamaño de la fuente */

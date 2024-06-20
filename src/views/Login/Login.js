@@ -10,16 +10,18 @@ export default {
 		dialogError: false,
 		typemsg: "",
 		credenciales: [],
-		rules: {
-			required: (value) => !!value || "Ingresar Contraseña.",
-			min: (v) => v.length >= 8 || "Min 8 characters",
-			//emailMatch: () => `The email and password you entered don't match`,
-		},
+		visible: false,
+		
 	}),
 	mounted() {
 		this.obtenerCredenciales();
 	},
 	methods: {
+		passwordRule(value) {
+			return (
+				value.length >= 6 || "La contraseña debe tener al menos 6 caracteres"
+			);
+		},
 		cerrar() {
 			this.dialogError = false;
 		},

@@ -62,6 +62,11 @@ export default {
 		mensaje: "",
 		dialogError: false,
 		dialogVisible: false,
+		credencialesDialog: false,
+		username: "",
+		password: "",
+		userCreated: null,
+		dialogCredencialesAlert: false,
 	}),
 	created() {
 		this.getGenero();
@@ -76,9 +81,7 @@ export default {
 		this.getHabilidadesbla();
 		this.getInteres();
 	},
-	mounted() {
-		this.verificacionLogin();
-	},
+
 	watch: {
 		selectedGenero(val) {
 			if (val) {
@@ -191,13 +194,6 @@ export default {
 		},
 	},
 	methods: {
-		verificacionLogin() {
-			const userid = localStorage.getItem("userId");
-			const username = localStorage.getItem("username");
-			if (!userid && !username) {
-				this.$router.push("/");
-			}
-		},
 		logout() {
 			localStorage.clear();
 			sessionStorage.clear();
@@ -295,7 +291,6 @@ export default {
 				})
 				.catch((r) => r);
 		},
-
 		async registrar() {
 			// Configuración de Firebase
 			const firebaseConfig = {
@@ -380,6 +375,8 @@ export default {
 					data_backend
 				);
 				console.log("Respuesta del backend:", response);
+				this.userCreated = response.data.IDUser;
+
 				this.mensaje = `Se registró correctamente al cliente`;
 				this.typemsg = "success";
 				this.dialogVisible = true;
@@ -397,11 +394,26 @@ export default {
 		},
 		aceptar() {
 			this.dialogVisible = false;
-			window.location.reload();
+			this.credencialesDialog = true;
 		},
 		cerrar() {
 			this.dialogVisible = false;
 			this.dialogError = false;
+		},
+		createCredenciales() {
+			var data = {
+				IDUser: this.userCreated,
+				username: this.username,
+				password: this.password,
+			};
+			axios
+				.post(`http://localhost:3000/credenciales`, data)
+				.then((response) => {
+					this.mensaje = `Se registraron las credenciales`;
+					this.typemsg = "success";
+					this.dialogCredencialesAlert = true;
+				})
+				.catch((error) => error);
 		},
 	},
 };
