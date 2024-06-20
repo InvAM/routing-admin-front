@@ -26,6 +26,7 @@
 				class="text-none mb-5 mr-8"
 				variant="plain"
 				style="margin-left: -12px"
+				@click="registrarse"
 				>¿No tiene una cuenta? Registrarse aqui</v-btn
 			>
 

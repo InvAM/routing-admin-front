@@ -1,5 +1,45 @@
 <template>
 	<div class="registrarUsuario">
+		<v-app-bar
+			style="
+				background: rgb(228, 0, 0);
+				background: linear-gradient(
+					90deg,
+					rgba(228, 0, 0, 1) 3%,
+					rgba(0, 40, 85, 1) 5%,
+					rgba(228, 0, 0, 1) 10%,
+					rgba(29, 35, 74, 1) 13%,
+					rgba(228, 0, 0, 1) 17%,
+					rgba(0, 40, 85, 1) 20%
+				);
+			"
+			dense
+			dark
+			height="80">
+			<v-container fluid>
+				<v-row align="center" justify="end" no-gutters>
+					<v-col cols="auto">
+						<v-speed-dial
+							location="left center"
+							transition="slide-x-transition">
+							<template v-slot:activator="{ props: activatorProps }">
+								<v-fab
+									v-bind="activatorProps"
+									size="large"
+									icon="mdi-account"
+									style="margin-right: 100px"></v-fab>
+							</template>
+
+							<v-btn key="1" icon="mdi-logout" @click="logout"></v-btn>
+						</v-speed-dial>
+					</v-col>
+					<v-col cols="auto">
+						<v-img src="" max-height="100" max-width="50"></v-img>
+					</v-col>
+				</v-row>
+			</v-container>
+		</v-app-bar>
+
 		<div
 			style="
 				width: 800px;
@@ -7,7 +47,7 @@
 				position: relative;
 				display: flex;
 				margin: auto;
-				top: 0px;
+				top: -180px;
 				border-radius: 20px;
 				margin-bottom: 33px;
 			">
@@ -21,30 +61,36 @@
 					<v-text-field
 						label="Nombre"
 						variant="solo"
+						:rules="[rules.required]"
 						v-model="frmUsuario.nombre"
 						class="form-field"></v-text-field>
 					<v-text-field
+						:rules="[rules.required]"
 						label="Apellido"
 						variant="solo"
 						v-model="frmUsuario.apellido"
 						class="form-field"></v-text-field>
 					<v-text-field
+						:rules="[rules.required]"
 						label="DNI"
 						variant="solo"
 						v-model="frmUsuario.dni"
 						class="form-field"></v-text-field>
 					<v-text-field
+						:rules="[rules.required]"
 						label="Edad"
 						variant="solo"
 						v-model="frmUsuario.edad"
 						class="form-field"></v-text-field>
 					<v-select
+						:rules="[rules.required]"
 						label="Genero"
 						v-model="selectedGenero"
 						:items="generos.map((genero) => genero.Descripcion_Genero)"
 						variant="solo"
 						class="form-field"></v-select>
 					<v-select
+						:rules="[rules.required]"
 						label="Año de Graduacion"
 						v-model="selectedGraduacion"
 						:items="
@@ -55,12 +101,14 @@
 						variant="solo"
 						class="form-field"></v-select>
 					<v-select
+						:rules="[rules.required]"
 						label="Ciclo"
 						:items="ciclos.map((ciclo) => ciclo.Descripcion_Ciclo)"
 						v-model="selectedCiclo"
 						variant="solo"
 						class="form-field"></v-select>
 					<v-select
+						:rules="[rules.required]"
 						label="Participación"
 						:items="
 							participaciones.map(
@@ -71,11 +119,13 @@
 						variant="solo"
 						class="form-field"></v-select>
 					<v-text-field
+						:rules="[rules.required]"
 						label="Nota Promedio"
 						variant="solo"
 						v-model="frmUsuario.notapromedio"
 						class="form-field"></v-text-field>
 					<v-select
+						:rules="[rules.required]"
 						label="Nivel Académico"
 						:items="
 							nivelesacademicos.map(
@@ -86,6 +136,7 @@
 						variant="solo"
 						class="form-field"></v-select>
 					<v-select
+						:rules="[rules.required]"
 						label="Habilidades de Programación"
 						:items="
 							habilidadesprg.map(
@@ -96,6 +147,7 @@
 						variant="solo"
 						class="form-field"></v-select>
 					<v-select
+						:rules="[rules.required]"
 						label="Habilidades Matemáticas"
 						:items="
 							habilidadesmat.map(
@@ -106,6 +158,7 @@
 						variant="solo"
 						class="form-field"></v-select>
 					<v-select
+						:rules="[rules.required]"
 						label="Condicion Estudiante"
 						:items="
 							condiciones.map((condicion) => condicion.Descripcion_Condicion)
@@ -114,6 +167,7 @@
 						variant="solo"
 						class="form-field"></v-select>
 					<v-select
+						:rules="[rules.required]"
 						multiple
 						label="Conocimiento Lenguajes Programación"
 						:items="lenguajes.map((lenguaje) => lenguaje.Descripcion_Lenguaje)"
@@ -121,6 +175,7 @@
 						variant="solo"
 						class="form-field"></v-select>
 					<v-select
+						:rules="[rules.required]"
 						multiple
 						label="Habilidades Blandas"
 						:items="
@@ -132,6 +187,7 @@
 						variant="solo"
 						class="form-field"></v-select>
 					<v-select
+						:rules="[rules.required]"
 						multiple
 						label="Intereses"
 						:items="intereses.map((interes) => interes.Descripcion_Interes)"
@@ -155,6 +211,54 @@
 					>
 				</div>
 			</v-form>
+			<v-dialog v-model="dialogVisible" :width="500">
+				<v-card color="#47d847">
+					<v-card-title>
+						<span class="mx-auto" style="color: white"
+							>¡Registrado con Exito!</span
+						>
+					</v-card-title>
+					<v-card-text>
+						<v-alert
+							v-if="mensaje !== ''"
+							color="white"
+							:type="typemsg"
+							outlined
+							>{{ mensaje }}</v-alert
+						>
+					</v-card-text>
+					<v-card-actions style="display: flex; justify-content: center">
+						<v-btn
+							style="background-color: #033076; color: #ffffff"
+							@click="aceptar">
+							Aceptar
+						</v-btn>
+					</v-card-actions>
+				</v-card>
+			</v-dialog>
+			<v-dialog v-model="dialogError" :width="500">
+				<v-card color="#ec4a4a">
+					<v-card-title>
+						<span class="mx-auto" style="color: white"> ¡Verifique! </span>
+					</v-card-title>
+					<v-card-text>
+						<v-alert
+							v-if="mensaje !== ''"
+							color="white"
+							:type="typemsg"
+							outlined
+							>{{ mensaje }}</v-alert
+						>
+					</v-card-text>
+					<v-card-actions style="display: flex; justify-content: center">
+						<v-btn
+							style="background-color: #033076; color: #ffffff"
+							@click="cerrar">
+							cerrar
+						</v-btn>
+					</v-card-actions>
+				</v-card>
+			</v-dialog>
 		</div>
 	</div>
 </template>

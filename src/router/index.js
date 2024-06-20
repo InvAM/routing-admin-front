@@ -24,8 +24,25 @@ const routes = [
 	{
 		path: "/registrarUsuario",
 		name: "RegistrarUsuario",
-		component: () => import (/* webpackChunkName: "registrarUsuario" */ "../views/RegistrarUsuario/registrarUsuario.vue")
-	}
+		component: () =>
+			import(
+				/* webpackChunkName: "registrarUsuario" */ "../views/RegistrarUsuario/registrarUsuario.vue"
+			),
+	},
+	{
+		path: "/listarUsuario",
+		name: "ListarUsuario",
+		component: () =>
+			import(
+				/* webpackChunkName: "listarUsuario" */ "../views/Usuario/listarUsuario.vue"
+			),
+	},
+	{
+		path: "/home-ia",
+		name: "Home-IA",
+		component: () =>
+			import(/* webpackChunkName: "homeia" */ "../views/ia/home-ia.vue"),
+	},
 ];
 
 const router = createRouter({

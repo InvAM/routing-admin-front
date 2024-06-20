@@ -25,7 +25,7 @@ export default {
 		},
 		obtenerCredenciales() {
 			axios
-				.get("http://localhost:3000/users")
+				.get("http://localhost:3000/credenciales")
 				.then((res) => {
 					this.credenciales = res.data;
 				})
@@ -60,16 +60,12 @@ export default {
 			} else {
 				try {
 					const response = await axios.post(
-						"http://localhost:3000/users/validate",
+						"http://localhost:3000/credenciales/validar",
 						data
 					);
 					const user = response.data;
-
-					// Guarda el ID del usuario y cualquier otra información relevante en el localStorage
-					localStorage.setItem("userId", user.id);
+					localStorage.setItem("userId", user.IDUser);
 					localStorage.setItem("username", user.username);
-					localStorage.setItem("createdAt", user.createdAt);
-					localStorage.setItem("authStrategy", user.authStrategy);
 
 					this.$router.push("/menu");
 				} catch (error) {
@@ -91,6 +87,9 @@ export default {
 		},
 		recuperar_contraseña() {
 			this.$router.push("/forgotPassword");
+		},
+		registrarse() {
+			this.$router.push("/registrarUsuario");
 		},
 	},
 };

@@ -1,43 +1,51 @@
-import axios from 'axios'
+import axios from "axios";
 export default {
 	name: "forgotPassword",
 	data: () => ({
 		username: "",
 		password: "",
-		password2:"",
+		password2: "",
 		visible: false,
 	}),
 	methods: {
 		passwordRule(value) {
-			return value.length >= 6 || 'La contraseña debe tener al menos 6 caracteres';
+			return (
+				value.length >= 6 || "La contraseña debe tener al menos 6 caracteres"
+			);
 		},
 		confirmPasswordRule(value) {
-			return value === this.password || 'Las contraseñas no coinciden';
+			return value === this.password || "Las contraseñas no coinciden";
+		},
+		logout() {
+			localStorage.clear();
+			sessionStorage.clear();
+
+			this.$router.push("/");
 		},
 		updatePassword() {
 			if (this.password === this.password2) {
-				const userId = localStorage.getItem('userId');
+				const userId = localStorage.getItem("userId");
 				if (!userId) {
-					alert('No se pudo obtener la información del usuario');
+					alert("No se pudo obtener la información del usuario");
 					return;
 				}
-		
+
 				const data = {
-					password: this.password
+					password: this.password,
 				};
-		
-				axios.patch(`http://localhost:3000/users/${userId}`, data)
+
+				axios
+					.patch(`http://localhost:3000/users/${userId}`, data)
 					.then(() => {
-						alert('Contraseña actualizada correctamente');
+						alert("Contraseña actualizada correctamente");
 					})
-					.catch(error => {
-						console.error('Error al actualizar la contraseña', error);
-						alert('Hubo un error al actualizar la contraseña');
+					.catch((error) => {
+						console.error("Error al actualizar la contraseña", error);
+						alert("Hubo un error al actualizar la contraseña");
 					});
 			} else {
-				alert('Las contraseñas no coinciden');
+				alert("Las contraseñas no coinciden");
 			}
-		}
-		
+		},
 	},
 };

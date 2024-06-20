@@ -15,49 +15,67 @@
 		dense
 		dark
 		height="80">
-		<v-speed-dial location="left center" transition="slide-x-transition">
-			<template v-slot:activator="{ props: activatorProps }">
-				<v-fab
-					style="margin-left: 1400px"
-					v-bind="activatorProps"
-					size="large"
-					icon="mdi-account"></v-fab>
-			</template>
+		<v-container fluid>
+			<v-row align="center" justify="end" no-gutters>
+				<v-col cols="auto">
+					<v-speed-dial location="left center" transition="slide-x-transition">
+						<template v-slot:activator="{ props: activatorProps }">
+							<v-fab
+								v-bind="activatorProps"
+								size="large"
+								icon="mdi-account"
+								style="margin-right: 100px"></v-fab>
+						</template>
 
-			<v-btn key="1" icon="mdi-account-edit"></v-btn>
-			<v-btn key="2" icon="mdi-logout"></v-btn>
-		</v-speed-dial>
-		<v-spacer></v-spacer>
-		<v-img src="" max-height="100" max-width="50"></v-img>
+						<v-btn key="1" icon="mdi-logout" @click="logout"></v-btn>
+					</v-speed-dial>
+				</v-col>
+				<v-col cols="auto">
+					<v-img src="" max-height="100" max-width="50"></v-img>
+				</v-col>
+			</v-row>
+		</v-container>
 	</v-app-bar>
 
-	<v-btn
-		size="x-large"
-		elevation="8"
-		class="custom-btn"
-		@click="registrarUsuario"
-		style="width: 350px; height: 300px; margin-left: 100px; margin-top: 100px">
-		Registrar Usuario
-		<v-icon style="margin-left: 10px">mdi-account-plus</v-icon>
-	</v-btn>
+	<v-container fluid>
+		<v-row align="center" justify="center" style="height: 80vh">
+			<v-col cols="auto">
+				<v-btn
+					size="x-large"
+					elevation="8"
+					class="custom-btn"
+					@click="registrarUsuario"
+					style="width: 350px; height: 300px">
+					Registrar Usuario
+					<v-icon style="margin-left: 10px">mdi-account-plus</v-icon>
+				</v-btn>
+			</v-col>
 
-	<v-btn
-		size="x-large"
-		elevation="8"
-		class="custom-btn"
-		style="width: 350px; height: 300px; margin-left: 100px; margin-top: 100px">
-		Administrar I.A.
-		<v-icon style="margin-left: 10px">mdi-robot-confused</v-icon>
-	</v-btn>
+			<v-col cols="auto">
+				<v-btn
+					size="x-large"
+					elevation="8"
+					class="custom-btn"
+					@click="homeia"
+					style="width: 350px; height: 300px">
+					Administrar I.A.
+					<v-icon style="margin-left: 10px">mdi-robot-confused</v-icon>
+				</v-btn>
+			</v-col>
 
-	<v-btn
-		size="x-large"
-		elevation="8"
-		class="custom-btn"
-		style="width: 350px; height: 300px; margin-left: 100px; margin-top: 100px">
-		Lista Usuarios
-		<v-icon style="margin-left: 10px">mdi-playlist-edit</v-icon>
-	</v-btn>
+			<v-col cols="auto">
+				<v-btn
+					@click="listarUsuario"
+					size="x-large"
+					elevation="8"
+					class="custom-btn"
+					style="width: 350px; height: 300px">
+					Lista Usuarios
+					<v-icon style="margin-left: 10px">mdi-playlist-edit</v-icon>
+				</v-btn>
+			</v-col>
+		</v-row>
+	</v-container>
 
 	<v-footer color="#233559" app height="60">
 		<v-row align="center" justify="center">

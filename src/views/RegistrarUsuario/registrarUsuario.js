@@ -1,4 +1,6 @@
 import axios from "axios";
+import { initializeApp } from "firebase/app";
+import { getFirestore, setDoc, doc } from "firebase/firestore";
 export default {
 	name: "registrarUsuario",
 	data: () => ({
@@ -54,6 +56,12 @@ export default {
 		selectedLenguaje: [],
 		selectedHabilidadesbla: [],
 		selectedIntereses: [],
+		rules: {
+			required: (value) => !!value || "Este campo es obligatorio",
+		},
+		mensaje: "",
+		dialogError: false,
+		dialogVisible: false,
 	}),
 	created() {
 		this.getGenero();
@@ -67,6 +75,9 @@ export default {
 		this.getLenguaje();
 		this.getHabilidadesbla();
 		this.getInteres();
+	},
+	mounted() {
+		this.verificacionLogin();
 	},
 	watch: {
 		selectedGenero(val) {
@@ -180,6 +191,19 @@ export default {
 		},
 	},
 	methods: {
+		verificacionLogin() {
+			const userid = localStorage.getItem("userId");
+			const username = localStorage.getItem("username");
+			if (!userid && !username) {
+				this.$router.push("/");
+			}
+		},
+		logout() {
+			localStorage.clear();
+			sessionStorage.clear();
+
+			this.$router.push("/");
+		},
 		getGenero() {
 			axios
 				.get("http://localhost:3000/genero")
@@ -271,7 +295,21 @@ export default {
 				})
 				.catch((r) => r);
 		},
-		registrar() {
+
+		async registrar() {
+			// Configuración de Firebase
+			const firebaseConfig = {
+				apiKey: "AIzaSyAdbxgtIebBfPyyIAUNiJIi870Z8DNBOuM",
+				authDomain: "ucv-rec-api.firebaseapp.com",
+				projectId: "ucv-rec-api",
+				storageBucket: "ucv-rec-api.appspot.com",
+				messagingSenderId: "355897289132",
+				appId: "1:355897289132:web:f0dccd53d0e9d7aeaf7209",
+			};
+			const firebaseApp = initializeApp(firebaseConfig);
+			const db = getFirestore(firebaseApp);
+
+			// Datos a enviar a Firebase
 			var data = {
 				edad: this.frmUsuario.edad,
 				nivel_academico: this.frmUsuario.IDNivelAcademico,
@@ -284,7 +322,86 @@ export default {
 				habilidades_blandas: this.frmUsuario.IDHabilidadesbla,
 				intereses: this.frmUsuario.IDIntereses,
 			};
+			const userId = this.frmUsuario.dni;
+
+			// Validar que no hay campos vacíos en los datos
+			for (const key in data) {
+				if (
+					data[key] === "" ||
+					(Array.isArray(data[key]) && data[key].length === 0)
+				) {
+					this.mensaje = `Faltan campos por completar`;
+					this.typemsg = "error";
+					this.dialogError = true;
+					return;
+				}
+			}
+
+			try {
+				// Agregar el documento a la colección "users-ia" con un ID personalizado
+				await setDoc(doc(db, "users-ia", userId), data);
+				console.log("Documento agregado correctamente con ID:", userId);
+			} catch (error) {
+				console.error("Error al agregar el documento a Firebase: ", error);
+				this.mensaje = "Error al agregar el documento a Firebase";
+				this.typemsg = "error";
+				this.dialogError = true;
+				return;
+			}
+
+			// Datos a enviar a tu backend
+			var data_backend = {
+				Nombre: this.frmUsuario.nombre,
+				Apellido: this.frmUsuario.apellido,
+				DNI: this.frmUsuario.dni,
+				Edad: this.frmUsuario.edad,
+				IDGenero: this.frmUsuario.IDGenero,
+				IDGraduacion: this.frmUsuario.IDGraduacion,
+				IDCiclo: this.frmUsuario.IDCiclo,
+				IDia: this.frmUsuario.dni,
+			};
+
+			// Validar que no hay campos vacíos en los datos del backend
+			for (const key in data_backend) {
+				if (
+					data_backend[key] === "" ||
+					(Array.isArray(data_backend[key]) && data_backend[key].length === 0)
+				) {
+					this.mensaje = `Faltan campos por completar`;
+					this.typemsg = "error";
+					this.dialogError = true;
+					return;
+				}
+			}
+
+			try {
+				const response = await axios.post(
+					"http://localhost:3000/users",
+					data_backend
+				);
+				console.log("Respuesta del backend:", response);
+				this.mensaje = `Se registró correctamente al cliente`;
+				this.typemsg = "success";
+				this.dialogVisible = true;
+			} catch (error) {
+				console.error(
+					"Error al enviar datos al backend:",
+					error.response ? error.response.data : error.message
+				);
+				this.mensaje = "Error al enviar datos al backend";
+				this.typemsg = "error";
+				this.dialogError = true;
+			}
+
 			console.log(data);
+		},
+		aceptar() {
+			this.dialogVisible = false;
+			window.location.reload();
+		},
+		cerrar() {
+			this.dialogVisible = false;
+			this.dialogError = false;
 		},
 	},
 };
