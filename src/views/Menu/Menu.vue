@@ -1,4 +1,4 @@
-<template class="menu">
+<template>
 	<v-app-bar
 		style="
 			background: rgb(228, 0, 0);
