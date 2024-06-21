@@ -11,7 +11,6 @@ export default {
 		typemsg: "",
 		credenciales: [],
 		visible: false,
-		
 	}),
 	mounted() {
 		this.obtenerCredenciales();
@@ -34,18 +33,20 @@ export default {
 				.catch((error) => e);
 		},
 		verificar() {
-			if (this.username !== "" && this.password !== "") {
-				const credencial = this.credenciales.some(
-					(credencial) =>
-						credencial.username !== this.username ||
-						credencial.password !== this.password
-				);
-				if (credencial) {
-					(this.mensaje = "Verifique su usuario y contraseña"),
-						(this.dialogError = true);
-					this.typemsg = "error";
-				}
+			const credencial = this.credenciales.find(
+				(credencial) =>
+					credencial.username === this.username &&
+					credencial.password === this.password
+			);
+			if (!credencial) {
+				this.mensaje = "Verifique su usuario y contraseña";
+				this.dialogError = true;
+				this.typemsg = "error";
+				console.log("Credenciales incorrectas");
+			} else {
+				console.log("Credenciales correctas");
 			}
+			return credencial;
 		},
 		async iniciarSesion() {
 			this.verificar();

@@ -18,7 +18,6 @@ export default {
 		logout() {
 			localStorage.clear();
 			sessionStorage.clear();
-
 			this.$router.push("/");
 		},
 		homeia() {

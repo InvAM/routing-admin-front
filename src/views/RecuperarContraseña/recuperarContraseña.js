@@ -35,7 +35,7 @@ export default {
 				};
 
 				axios
-					.patch(`http://localhost:3000/users/${userId}`, data)
+					.patch(`http://localhost:3000/credenciales/${userId}`, data)
 					.then(() => {
 						alert("Contraseña actualizada correctamente");
 					})
