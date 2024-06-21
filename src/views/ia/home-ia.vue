@@ -45,7 +45,9 @@
 				margin-left: -66%;
 				margin-top: -5%;
 				border-radius: 20px;
-			"></div>
+			">
+			
+		</div>
 	</div>
 </template>
 <style>
