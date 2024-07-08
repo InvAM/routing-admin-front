@@ -47,7 +47,7 @@
 			">
 			<v-icon
 				style="
-					background-color: #928B8B;
+					background-color: #928b8b;
 					width: 600px;
 					height: 84px;
 					border-top-left-radius: 50px;
@@ -57,7 +57,7 @@
 			>
 			<div
 				style="
-					background-color: #928B8B;
+					background-color: #928b8b;
 					width: 600px;
 					border-bottom-left-radius: 50px;
 					border-bottom-right-radius: 50px;
@@ -131,6 +131,46 @@
 			</v-hover>
 		</div>
 	</div>
+
+	<v-dialog v-model="dialogError" :width="500">
+		<v-card color="#ec4a4a">
+			<v-card-title>
+				<span class="mx-auto" style="color: white"> ¡Verifique! </span>
+			</v-card-title>
+			<v-card-text>
+				<v-alert v-if="mensaje !== ''" color="white" :type="typemsg" outlined>{{
+					mensaje
+				}}</v-alert>
+			</v-card-text>
+			<v-card-actions style="display: flex; justify-content: center">
+				<v-btn
+					style="background-color: #033076; color: #ffffff"
+					@click="cerrar">
+					Cerrar
+				</v-btn>
+			</v-card-actions>
+		</v-card>
+	</v-dialog>
+
+	<v-dialog v-model="dialogCredencialesAlert" :width="500">
+		<v-card color="#47d847">
+			<v-card-title>
+				<span class="mx-auto" style="color: white">¡Credenciales Actualizadas!</span>
+			</v-card-title>
+			<v-card-text>
+				<v-alert v-if="mensaje !== ''" color="white" :type="typemsg" outlined>{{
+					mensaje
+				}}</v-alert>
+			</v-card-text>
+			<v-card-actions style="display: flex; justify-content: center">
+				<v-btn
+					style="background-color: #033076; color: #ffffff"
+					@click="aceptar">
+					Aceptar
+				</v-btn>
+			</v-card-actions>
+		</v-card>
+	</v-dialog>
 </template>
 
 <style>

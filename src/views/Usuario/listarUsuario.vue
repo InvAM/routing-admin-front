@@ -52,7 +52,7 @@
 					class="custom-table">
 					<template v-slot:top>
 						<v-toolbar flat style="border-radius: 20px">
-							<v-toolbar-title> Lista de Clientes</v-toolbar-title>
+							<v-toolbar-title> Lista de Usuarios</v-toolbar-title>
 							<v-spacer></v-spacer>
 							<v-text-field
 								v-model="search"

@@ -11,6 +11,7 @@ export default {
 		typemsg: "",
 		credenciales: [],
 		visible: false,
+
 	}),
 	mounted() {
 		this.obtenerCredenciales();

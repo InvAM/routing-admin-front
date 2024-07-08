@@ -574,7 +574,7 @@ export default {
 					`http://localhost:3000/users/${this.selectedUser.IDUser}`,
 					data_backend
 				);
-				this.mensaje = `Se registró correctamente al cliente`;
+				this.mensaje = `Se actualizo correctamente al usuario`;
 				this.typemsg = "success";
 				this.dialogVisible = true;
 			} catch (error) {

@@ -39,17 +39,7 @@
 	<div class="menu">
 		<v-container fluid>
 			<v-row align="center" justify="center" style="height: 80vh">
-				<v-col cols="auto">
-					<v-btn
-						size="x-large"
-						elevation="8"
-						class="custom-btn"
-						@click="registrarUsuario"
-						style="width: 350px; height: 300px">
-						Registrar Usuario
-						<v-icon style="margin-left: 10px">mdi-account-plus</v-icon>
-					</v-btn>
-				</v-col>
+				
 
 				<v-col cols="auto">
 					<v-btn

@@ -56,22 +56,22 @@
 										resultados.classification_report &&
 										resultados.classification_report[0]
 									">
-									<strong>F1-Score:</strong>
+									<strong>Medida general del modelo:</strong>
 									{{ resultados.classification_report[0]["f1-score"] }}
 								</p>
 								<p
 									v-if="
 										resultados.classification_report &&
-										resultados.classification_report[1]
+										resultados.classification_report[0]
 									">
-									<strong>F1-Score:</strong>
-									{{ resultados.classification_report[1]["f1-score"] }}
+									<strong>Predicciones correctas positivas:</strong>
+									{{ resultados.classification_report[0]["precision"] }}
 								</p>
 								<p v-if="
 										resultados.classification_report &&
 										resultados.classification_report[0]
 									">
-									<strong>Recall:</strong>
+									<strong>Identificación correcta de positivos.</strong>
 									{{ resultados.classification_report[0]["recall"] }}
 								</p v-if="
 										resultados.classification_report &&
@@ -81,7 +81,7 @@
 										resultados.classification_report &&
 										resultados.classification_report[0]
 									">
-									<strong>Soporte:</strong>
+									<strong>Número de casos.</strong>
 									{{ resultados.classification_report[0]["support"] }}
 								</p>
 							</v-card-text>
@@ -97,28 +97,28 @@
 										resultados.classification_report &&
 										resultados.classification_report[1]
 									">
-									<strong>F1-Score:</strong>
+									<strong>Medida general del modelo:</strong>
 									{{ resultados.classification_report[1]["f1-score"] }}
 								</p>
 								<p v-if="
 										resultados.classification_report &&
 										resultados.classification_report[1]
 									">
-									<strong>Precisión:</strong>
+									<strong>Predicciones correctas positivas</strong>
 									{{ resultados.classification_report[1]["precision"] }}
 								</p>
 								<p v-if="
 										resultados.classification_report &&
 										resultados.classification_report[1]
 									"> 
-									<strong>Recall:</strong>
+									<strong>Identificación correcta de positivos.</strong>
 									{{ resultados.classification_report[1]["recall"] }}
 								</p>
 								<p v-if="
 										resultados.classification_report &&
 										resultados.classification_report[1]
 									"> 
-									<strong>Soporte:</strong>
+									<strong>Número de casos.</strong>
 									{{ resultados.classification_report[1]["support"] }}
 								</p>
 							</v-card-text>
@@ -134,28 +134,28 @@
 										resultados.classification_report &&
 										resultados.classification_report[2]
 									">
-									<strong>F1-Score:</strong>
+									<strong>Medida general del modelo:</strong>
 									{{ resultados.classification_report[2]["f1-score"] }}
 								</p>
 								<p v-if="
 										resultados.classification_report &&
 										resultados.classification_report[2]
 									">
-									<strong>Precisión:</strong>
+									<strong>Predicciones correctas positivas</strong>
 									{{ resultados.classification_report[2]["precision"] }}
 								</p>
 								<p v-if="
 										resultados.classification_report &&
 										resultados.classification_report[2]
 									">
-									<strong>Recall:</strong>
+									<strong>Identificación correcta de positivos.</strong>
 									{{ resultados.classification_report[2]["recall"] }}
 								</p>
 								<p v-if="
 										resultados.classification_report &&
 										resultados.classification_report[2]
 									">
-									<strong>Soporte:</strong>
+									<strong>Número de casos.</strong>
 									{{ resultados.classification_report[2]["support"] }}
 								</p>
 							</v-card-text>
@@ -171,28 +171,28 @@
 										resultados.classification_report &&
 										resultados.classification_report[3]
 									">
-									<strong>F1-Score:</strong>
+									<strong>Medida general del modelo:</strong>
 									{{ resultados.classification_report[3]["f1-score"] }}
 								</p>
 								<p v-if="
 										resultados.classification_report &&
 										resultados.classification_report[3]
 									">
-									<strong>Precisión:</strong>
+									<strong>Predicciones correctas positivas</strong>
 									{{ resultados.classification_report[3]["precision"] }}
 								</p>
 								<p v-if="
 										resultados.classification_report &&
 										resultados.classification_report[3]
 									">
-									<strong>Recall:</strong>
+									<strong>Identificación correcta de positivos.</strong>
 									{{ resultados.classification_report[3]["recall"] }}
 								</p>
 								<p v-if="
 										resultados.classification_report &&
 										resultados.classification_report[3]
 									">
-									<strong>Soporte:</strong>
+									<strong>Número de casos.</strong>
 									{{ resultados.classification_report[3]["support"] }}
 								</p>
 							</v-card-text>
@@ -208,28 +208,28 @@
 										resultados.classification_report &&
 										resultados.classification_report[4]
 									">
-									<strong>F1-Score:</strong>
+									<strong>Medida general del modelo:</strong>
 									{{ resultados.classification_report[4]["f1-score"] }}
 								</p>
 								<p v-if="
 										resultados.classification_report &&
 										resultados.classification_report[4]
 									">
-									<strong>Precisión:</strong>
+									<strong>Predicciones correctas positivas</strong>
 									{{ resultados.classification_report[4]["precision"] }}
 								</p>
 								<p v-if="
 										resultados.classification_report &&
 										resultados.classification_report[4]
 									">
-									<strong>Recall:</strong>
+									<strong>Identificación correcta de positivos.</strong>
 									{{ resultados.classification_report[4]["recall"] }}
 								</p>
 								<p v-if="
 										resultados.classification_report &&
 										resultados.classification_report[4]
 									">
-									<strong>Soporte:</strong>
+									<strong>Número de casos.</strong>
 									{{ resultados.classification_report[4]["support"] }}
 								</p>
 							</v-card-text>
@@ -245,28 +245,28 @@
 										resultados.classification_report &&
 										resultados.classification_report[5]
 									">
-									<strong>F1-Score:</strong>
+									<strong>Medida general del modelo:</strong>
 									{{ resultados.classification_report[5]["f1-score"] }}
 								</p>
 								<p v-if="
 										resultados.classification_report &&
 										resultados.classification_report[5]
 									">
-									<strong>Precisión:</strong>
+									<strong>Predicciones correctas positivas</strong>
 									{{ resultados.classification_report[5]["precision"] }}
 								</p>
 								<p v-if="
 										resultados.classification_report &&
 										resultados.classification_report[5]
 									">
-									<strong>Recall:</strong>
+									<strong>Identificación correcta de positivos.</strong>
 									{{ resultados.classification_report[5]["recall"] }}
 								</p>
 								<p v-if="
 										resultados.classification_report &&
 										resultados.classification_report[5]
 									">
-									<strong>Soporte:</strong>
+									<strong>Número de casos.</strong>
 									{{ resultados.classification_report[5]["support"] }}
 								</p>
 							</v-card-text>
@@ -282,28 +282,28 @@
 										resultados.classification_report &&
 										resultados.classification_report[6]
 									">
-									<strong>F1-Score:</strong>
+									<strong>Medida general del modelo:</strong>
 									{{ resultados.classification_report[6]["f1-score"] }}
 								</p>
 								<p v-if="
 										resultados.classification_report &&
 										resultados.classification_report[6]
 									">
-									<strong>Precisión:</strong>
+									<strong>Predicciones correctas positivas</strong>
 									{{ resultados.classification_report[6]["precision"] }}
 								</p>
 								<p v-if="
 										resultados.classification_report &&
 										resultados.classification_report[6]
 									">
-									<strong>Recall:</strong>
+									<strong>Identificación correcta de positivos.</strong>
 									{{ resultados.classification_report[6]["recall"] }}
 								</p>
 								<p v-if="
 										resultados.classification_report &&
 										resultados.classification_report[6]
 									">
-									<strong>Soporte:</strong>
+									<strong>Número de casos.</strong>
 									{{ resultados.classification_report[6]["support"] }}
 								</p>
 							</v-card-text>
@@ -318,11 +318,10 @@
 								<p v-if="
 										resultados.classification_report &&
 										resultados.classification_report[0]
-									"><strong>Precisión:</strong> {{ resultados.accuracy }}</p>
+									"><strong>Predicciones correctas positivas</strong> {{ resultados.accuracy }}</p>
 							</v-card-text>
 						</v-card>
 						<v-btn style="width: 100%" @click="atras">Atras</v-btn>
-						<v-btn style="width: 100%; margin-top: 10px;" @click="entrenamiento_rutas">Cantidad Ejemplos Entrenamiento</v-btn>
 					</v-col>
 				</v-row>
 			</div>

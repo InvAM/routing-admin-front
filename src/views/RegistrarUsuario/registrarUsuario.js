@@ -377,7 +377,7 @@ export default {
 				console.log("Respuesta del backend:", response);
 				this.userCreated = response.data.IDUser;
 
-				this.mensaje = `Se registró correctamente al cliente`;
+				this.mensaje = `Se registró correctamente al usuario`;
 				this.typemsg = "success";
 				this.dialogVisible = true;
 			} catch (error) {

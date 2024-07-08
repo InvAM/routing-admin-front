@@ -6,6 +6,12 @@ export default {
 		password: "",
 		password2: "",
 		visible: false,
+		userID: "",
+		mensajeError: "",
+		mensaje: "",
+		dialogError: false,
+		typemsg: "",
+		dialogCredencialesAlert: false,
 	}),
 	methods: {
 		passwordRule(value) {
@@ -22,29 +28,43 @@ export default {
 
 			this.$router.push("/");
 		},
+		aceptar() {
+			this.dialogCredencialesAlert = false;
+			this.$router.push("/");
+		},
+		cerrar() {
+			this.dialogError = false;
+		},
 		updatePassword() {
 			if (this.password === this.password2) {
-				const userId = localStorage.getItem("userId");
-				if (!userId) {
-					alert("No se pudo obtener la información del usuario");
-					return;
+				const username = this.username;
+				if (username) {
+					const data = {
+						username: username,
+						password: this.password,
+					};
+
+					axios
+						.patch(`http://localhost:3000/credenciales/update-password`, data)
+						.then(() => {
+							this.mensaje = "Contraseña actualizada correctamente";
+							this.typemsg = "success";
+							this.dialogCredencialesAlert = true;
+						})
+						.catch((error) => {
+							this.mensaje = "No se pudo actualizar correctamente";
+							this.typemsg = "error";
+							this.dialogError = true;
+						});
+				} else {
+					this.mensaje = "No se encontró el nombre de usuario";
+					this.typemsg = "error";
+					this.dialogError = true;
 				}
-
-				const data = {
-					password: this.password,
-				};
-
-				axios
-					.patch(`http://localhost:3000/credenciales/${userId}`, data)
-					.then(() => {
-						alert("Contraseña actualizada correctamente");
-					})
-					.catch((error) => {
-						console.error("Error al actualizar la contraseña", error);
-						alert("Hubo un error al actualizar la contraseña");
-					});
 			} else {
-				alert("Las contraseñas no coinciden");
+				this.mensaje = "Las contraseñas no coinciden";
+				this.typemsg = "error";
+				this.dialogError = true;
 			}
 		},
 	},
